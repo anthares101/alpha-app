@@ -6,11 +6,13 @@ Part of my master's degree final project, the objective is to create a PoC of da
 
 This app is the one that should be installed in the smart tv, it is responsible for encoding a message and print it in an image. The idea is to make the message non visible to the human eye (Or at least hard to catch).
 
-## Prerequisites
+## Usage
+
+### Prerequisites
 
 In order to launch the environment you need Yarn, React Native and a virtual machine or android device connected to the computer.
 
-## How to launch the dev environment
+### How to launch the dev environment
 
 Install dependencies:
 ```
