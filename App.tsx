@@ -34,7 +34,7 @@ const App = () => {
         position: {x: 300, y: 300},
         text: text,
         textSize: 100,
-        color: '#111111',
+        color: '#e0b38c',
       },
     ];
 
