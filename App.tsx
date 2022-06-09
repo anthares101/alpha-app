@@ -44,7 +44,7 @@ const App = () => {
       })
       .join('2');
 
-    return `2002${encodedMessage}2002`;
+    return `2002${encodedMessage}2022`;
   };
   const encodedMessage = encodeMessage(MESSAGE);
 
