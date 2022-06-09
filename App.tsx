@@ -1,61 +1,57 @@
-import React, {useEffect, useState} from 'react';
-import {Image, View, StyleSheet, ImageBackground} from 'react-native';
-import RNPhotoManipulator from 'react-native-photo-manipulator';
+import React, {useEffect, useRef, useState} from 'react';
+import {useFps} from 'react-fps';
+import {View, StyleSheet, ImageBackground, Text} from 'react-native';
 
 const MESSAGE = 'Helloworld';
 
 const App = () => {
-  const [newImage, setNewImage] = useState('');
+  const [fpsCounter, setFpsCounter] = useState('');
+  const {fps} = useFps(1);
   const wallpaperImage = require('./assets/wallpaper.jpg');
+  const counter = useRef(0);
 
   useEffect(() => {
-    encodeText(MESSAGE);
+    if (fps[0]) {
+      const hiddenInfo = hideInfo(encodedMessage[counter.current], fps[0]);
+      setFpsCounter(hiddenInfo);
+      counter.current = (counter.current + 1) % encodedMessage.length;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fps]);
 
-  const encodeText = (text: string) => {
-    var delay = 0;
-    Array.from(text).forEach(character => {
-      setTimeout(function () {
-        processImage(character);
-      }, delay);
+  const hideInfo = (character: string, currentFps: number): string => {
+    let roundedFps = Math.round(currentFps / 10) * 10;
 
-      delay += 2000;
-    });
-    // Repeat the message again
-    setTimeout(function () {
-      encodeText(MESSAGE);
-    }, delay);
+    switch (character) {
+      case '1': {
+        roundedFps = roundedFps + 1;
+        break;
+      }
+      case '2': {
+        roundedFps = roundedFps - 1;
+        break;
+      }
+    }
+
+    return roundedFps.toString();
   };
 
-  const processImage = async (text: string) => {
-    const texts = [
-      {
-        position: {x: 500, y: 2600},
-        text: text,
-        textSize: 100,
-        color: '#282432',
-      },
-    ];
+  const encodeMessage = (message: string) => {
+    const encodedMessage = message
+      .split('')
+      .map(char => {
+        return char.charCodeAt(0).toString(2);
+      })
+      .join('2');
 
-    const newImagePath = await RNPhotoManipulator.printText(
-      wallpaperImage,
-      texts,
-    );
-    setNewImage(newImagePath);
+    return `2002${encodedMessage}2002`;
   };
+  const encodedMessage = encodeMessage(MESSAGE);
 
   return (
     <View>
       <ImageBackground style={styles.stretch} source={wallpaperImage}>
-        {newImage ? (
-          <Image
-            style={styles.stretch}
-            source={{
-              uri: newImage,
-            }}
-          />
-        ) : null}
+        <Text style={styles.hiddenMessage}>FPS: {fpsCounter}</Text>
       </ImageBackground>
     </View>
   );
@@ -68,5 +64,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'stretch',
+  },
+  hiddenMessage: {
+    fontSize: 20,
+    marginLeft: 10,
+    marginTop: 10,
+    color: '#000000',
   },
 });
