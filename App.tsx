@@ -31,10 +31,10 @@ const App = () => {
   const processImage = async (text: string) => {
     const texts = [
       {
-        position: {x: 300, y: 300},
+        position: {x: 500, y: 2600},
         text: text,
         textSize: 100,
-        color: '#e0b38c',
+        color: '#282432',
       },
     ];
 
