@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useFps} from 'react-fps';
 import {View, StyleSheet, ImageBackground, Text} from 'react-native';
 
+const SPECIAL_SEQUENCE = '22';
 const MESSAGE = 'Helloworld';
 
 const App = () => {
@@ -44,7 +45,7 @@ const App = () => {
       })
       .join('2');
 
-    return `2002${encodedMessage}2022`;
+    return `${SPECIAL_SEQUENCE}${encodedMessage}`;
   };
   const encodedMessage = encodeMessage(MESSAGE);
 
