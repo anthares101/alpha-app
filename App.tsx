@@ -3,7 +3,7 @@ import {useFps} from 'react-fps';
 import {View, StyleSheet, ImageBackground, Text} from 'react-native';
 
 const SPECIAL_SEQUENCE = '22';
-const MESSAGE = 'ey!';
+const MESSAGE = 'Hello world';
 
 const App = () => {
   const [fpsCounter, setFpsCounter] = useState('');
